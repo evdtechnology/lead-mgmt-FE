@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 interface AxiosClientArgs extends AxiosRequestConfig {
   toolkit: {
@@ -42,7 +43,7 @@ axios.interceptors.response.use(
       ? error.response.data.message
       : "Something went wrong";
 
-    alert(errorMessage);
+    toast.error(errorMessage);
     return Promise.reject(error.response?.data ?? "Something went wrong");
   }
 );

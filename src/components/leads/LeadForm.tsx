@@ -16,7 +16,8 @@ import {
 import { LEAD_STATUSES } from "@/utils/enums";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { createLeadAsync } from "@/redux/services/lead.service";
+import { createLeadAsync, getLeadsAsync } from "@/redux/services/lead.service";
+import toast from "react-hot-toast";
 
 interface LeadFormProps {
   open: boolean;
@@ -38,11 +39,15 @@ export default function LeadForm({ open, handleClose }: LeadFormProps) {
     } else {
       setError(false);
       console.log(form, "form data");
-      dispatch(createLeadAsync(form))
-      if(!isSubmitting){
-        handleClose();
-        setForm({ name: "", email: "", status: "" })
-      }
+      dispatch(createLeadAsync(form)).then((res) => {
+        console.log('res', res)
+        if(!res?.error?.message){
+          toast.success('Lead created successfully')
+          dispatch(getLeadsAsync());
+          handleClose();
+          setForm({ name: "", email: "", status: "" })
+        }
+      })
     }
   };
 
@@ -123,7 +128,7 @@ export default function LeadForm({ open, handleClose }: LeadFormProps) {
           </Button>
           <Button variant="contained" type="submit" color="primary">
             {isSubmitting ? 
-            <CircularProgress size={24} /> :
+            <CircularProgress size={24} sx={{color: "white"}}/> :
             "Submit" }
           </Button>
         </DialogActions>
