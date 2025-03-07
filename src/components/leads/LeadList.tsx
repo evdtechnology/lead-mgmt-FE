@@ -47,7 +47,7 @@ export default function LeadList() {
 
   useEffect(() => {
     dispatch(getLeadsAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container sx={{ mt: 4 }}>

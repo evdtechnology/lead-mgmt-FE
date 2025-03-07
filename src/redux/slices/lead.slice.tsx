@@ -42,7 +42,7 @@ const leadSlice = createSlice({
         });
         builder.addMatcher(isAnyOf(getLeadsAsync.fulfilled), (state,{payload}) => {
             state.isLoading = false;
-            state.leadList = payload;
+            state.leadList = payload as Lead[];
         });
         builder.addMatcher(isAnyOf(getLeadsAsync.rejected), (state) => {
             state.isLoading = false;

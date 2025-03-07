@@ -3,17 +3,24 @@ import toast from "react-hot-toast";
 
 interface AxiosClientArgs extends AxiosRequestConfig {
   toolkit: {
-    fulfillWithValue: (value: any) => any;
-    rejectWithValue: (value: any) => any;
+    fulfillWithValue: (value: unknown) => unknown;
+    rejectWithValue: (value: unknown) => unknown;
   };
   headers?: Record<string, string>;
 }
+
 interface ErrorResponse {
   message: string;
+  error: { message: string };
 }
 
-const isErrorResponse = (error: any): error is ErrorResponse => {
-  return error && typeof error.message === "string";
+const isErrorResponse = (error: unknown): error is ErrorResponse => {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    typeof (error as ErrorResponse).message === "string"
+  );
 };
 
 const AxiosClient = async (args: AxiosClientArgs) => {

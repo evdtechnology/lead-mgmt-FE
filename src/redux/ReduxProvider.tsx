@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/inline-script-id */
-// src/redux/ReduxProvider.tsx
 "use client";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store";

@@ -40,9 +40,8 @@ export default function LeadForm({ open, handleClose }: LeadFormProps) {
       setError(false);
       console.log(form, "form data");
       dispatch(createLeadAsync(form)).then((res) => {
-        console.log('res', res)
-        if(!res?.error?.message){
-          toast.success('Lead created successfully')
+        if (!('error' in res)) {
+          toast.success('Lead created successfully');
           dispatch(getLeadsAsync());
           handleClose();
           setForm({ name: "", email: "", status: "" })
